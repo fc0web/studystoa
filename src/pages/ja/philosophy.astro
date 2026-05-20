@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import NewsGrid from '../../components/NewsGrid.astro';
+import { fetchAllNews, filterByCategory } from '../../data/news-bridge';
+import ja from '../../i18n/ja.json';
+
+const i = ja;
+const news = await fetchAllNews();
+const items = filterByCategory(news, 'philosophy');
+---
+<Base lang="ja" title={i.nav.philosophy} description={`${i.nav.philosophy} — ${i.site.tagline}`}>
+  <h1>{i.nav.philosophy}</h1>
+  <p style="color: var(--text-muted); margin-bottom: 24px;">
+    Sources: Philosophy Bites / Daily Nous / n-Category Café / PhilArchive / PhilSci-Archive
+  </p>
+  {items.length > 0 ? (
+    <NewsGrid items={items} lang="ja" noImageLabel={i.card.no_image} />
+  ) : (
+    <p>{i.home.no_news}</p>
+  )}
+</Base>

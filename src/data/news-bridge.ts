@@ -79,13 +79,13 @@ async function fetchJson(url: string, timeoutMs = 10000): Promise<any | null> {
   }
 }
 
-/** Fetch edu-news/latest.json from rei-aios (Phase 1 MVP primary source). */
+/** Fetch edu-news/latest.json from rei-aios (Phase 1 fallback). */
 export async function fetchEduNews(): Promise<NewsItem[]> {
   const url = `${REI_AIOS_BASE}/data/edu-news/latest.json`;
   const data = await fetchJson(url);
   if (!data || !Array.isArray(data.items)) {
-    console.warn(`[news-bridge] edu-news fetch failed, using sample data`);
-    return SAMPLE_NEWS;
+    console.warn(`[news-bridge] edu-news fetch failed`);
+    return [];
   }
   return data.items.map((item: any) => ({
     source: item.source,
@@ -100,11 +100,49 @@ export async function fetchEduNews(): Promise<NewsItem[]> {
   }));
 }
 
-/** Aggregate all bridged sources. Phase 1: edu-news only. */
+/**
+ * Phase 2 (G): fetch unified studystoa-feed (rei-aios build-studystoa-news-feed.ts output).
+ * 5-category aggregation (philosophy + thought + education + learning + certification).
+ */
+export async function fetchUnifiedFeed(): Promise<NewsItem[]> {
+  const url = `${REI_AIOS_BASE}/data/studystoa-feed/latest.json`;
+  const data = await fetchJson(url);
+  if (!data || !Array.isArray(data.items)) {
+    console.warn(`[news-bridge] studystoa-feed fetch failed`);
+    return [];
+  }
+  return data.items.map((item: any) => ({
+    source: item.source,
+    sourceLabel: item.sourceLabel || SOURCE_LABELS[item.source] || item.source,
+    title: item.title,
+    url: item.url,
+    published: item.published,
+    summary: item.summary,
+    author: item.author,
+    imageUrl: item.imageUrl ?? null,
+    category: (item.category as Category) || categorize(item.source),
+  }));
+}
+
+/**
+ * Aggregate all sources with graceful fallback chain:
+ *   1. Try unified studystoa-feed (Phase 2: 5 categories, 100 items typical)
+ *   2. Fallback to edu-news only (Phase 1: 30 items)
+ *   3. Fallback to SAMPLE_NEWS (offline dev)
+ */
 export async function fetchAllNews(): Promise<NewsItem[]> {
+  const unified = await fetchUnifiedFeed();
+  if (unified.length > 0) {
+    return unified.sort((a, b) => (b.published || '').localeCompare(a.published || ''));
+  }
+  // Fallback 1: edu-news only
   const eduNews = await fetchEduNews();
-  // Sort by published desc
-  return eduNews.sort((a, b) => (b.published || '').localeCompare(a.published || ''));
+  if (eduNews.length > 0) {
+    return eduNews.sort((a, b) => (b.published || '').localeCompare(a.published || ''));
+  }
+  // Fallback 2: sample
+  console.warn(`[news-bridge] all sources failed, using SAMPLE_NEWS`);
+  return SAMPLE_NEWS;
 }
 
 /** Filter by category. */

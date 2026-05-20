@@ -108,6 +108,10 @@ const ogImageUrl = ogImage || '/og-image.png';
     <a href={lang === 'ja' ? '/ja/' : '/'} class="site-name">{i.site.name}</a>
     <nav>
       <a href={lang === 'ja' ? '/ja/' : '/'}>{i.nav.home}</a>
+      <a href={lang === 'ja' ? '/ja/philosophy' : '/philosophy'}>{i.nav.philosophy}</a>
+      <a href={lang === 'ja' ? '/ja/thought' : '/thought'}>{i.nav.thought}</a>
+      <a href={lang === 'ja' ? '/ja/education' : '/education'}>{i.nav.education}</a>
+      <a href={lang === 'ja' ? '/ja/learning' : '/learning'}>{i.nav.learning}</a>
       <a href={lang === 'ja' ? '/ja/about' : '/about'}>{i.nav.about}</a>
       <LangSwitch currentLang={lang} />
     </nav>
