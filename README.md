@@ -133,6 +133,22 @@ studystoa/
 - **Operated by 1 person + AI** — automated data fetch but editorial curation gradual
 - **No PII / no tracking** — except standard hosting analytics (Cloudflare Pages basic)
 
+## Source Policy
+
+Full per-source verification (robots.txt, Terms of Service, OG image policy, defensive measures) is documented at:
+
+**[Rei-AIOS docs/source-policy.md](https://github.com/fc0web/rei-aios/blob/main/docs/source-policy.md)** — single source of truth (shared between Rei-AIOS + StudyStoa).
+
+Phase 1 source verification summary (2026-05-20):
+
+| source | crawling | AI-bot ban | RSS/API | verdict |
+|---|---|---|---|---|
+| Inside Higher Ed | ✅ Allow | ⚠ AI training bots banned + `ai-train=no` | RSS public | Grey zone — defensive measures applied (UA / 200-char summary / direct link / no AI training use) |
+| The Hechinger Report | ✅ Allow | ✅ no restriction | RSS `/feed/` allowed | Clear OK |
+| HN Algolia | ✅ public API | ✅ free, CORS open | JSON API ~10k/hr | Clear OK |
+
+Open Graph images are hot-linked from publisher CDNs (industry-standard fair use, same as Yahoo / Google News / Smartnews / Apple News). If any publisher requests removal, contact `fc2webb@gmail.com` for compliance within 7 days.
+
 ## License & Attribution
 
 - This site's **own** code: MIT or AGPL-3.0 (TBD)
