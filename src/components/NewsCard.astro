@@ -1,18 +1,52 @@
 ---
-import type { NewsItem } from '../data/news-bridge';
+import type { NewsItem, Category } from '../data/news-bridge';
 
 export interface Props {
   item: NewsItem;
   lang: 'en' | 'ja';
+  /** Deprecated (kept for back-compat with NewsGrid prop). Phase α-14: no longer used —
+   *  no-image cells now render a category-themed SVG placeholder instead of plain text. */
   noImageLabel?: string;
 }
 
-const { item, lang, noImageLabel = '(no image)' } = Astro.props;
+const { item, lang } = Astro.props;
 const dateStr = item.published
   ? new Date(item.published).toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', {
       year: 'numeric', month: 'short', day: 'numeric',
     })
   : '';
+
+/**
+ * Phase α-14 (2026-05-21): category-themed SVG placeholder for no-image cards.
+ *
+ * Theme: gradient background + category-specific icon (Unicode pictograph as text glyph)
+ * + source label centered. Keeps visual rhythm with image cards (same 16:9 aspect).
+ *
+ * Why icons-as-text (not <img>) — keeps placeholder zero-network (no external request,
+ * Cloudflare Pages friendly) and inherits font rendering (Mac/Win/Linux/Android all
+ * have the system emoji fonts).
+ */
+type PlaceholderTheme = {
+  /** Category-themed gradient (top → bottom) */
+  gradientStart: string;
+  gradientEnd: string;
+  /** Unicode glyph rendered large */
+  glyph: string;
+  /** Glyph color (text-stroke) */
+  glyphColor: string;
+};
+
+const THEMES: Record<Category, PlaceholderTheme> = {
+  philosophy:    { gradientStart: '#3b1d6e', gradientEnd: '#1a0f3d', glyph: '🏛',  glyphColor: '#d8c3ff' },
+  thought:       { gradientStart: '#1e3a8a', gradientEnd: '#0c1d4d', glyph: '💭', glyphColor: '#bfd5ff' },
+  education:     { gradientStart: '#065f46', gradientEnd: '#022c1f', glyph: '🎓', glyphColor: '#a7e8c8' },
+  learning:      { gradientStart: '#9a3412', gradientEnd: '#4a1305', glyph: '💡', glyphColor: '#ffcfa3' },
+  certification: { gradientStart: '#115e59', gradientEnd: '#062927', glyph: '🪪', glyphColor: '#a3e4dc' },
+  other:         { gradientStart: '#374151', gradientEnd: '#1f2937', glyph: '✦',  glyphColor: '#cbd5e1' },
+};
+
+const theme = THEMES[item.category] || THEMES.other;
+const sourceLabel = item.sourceLabel || item.source;
 ---
 <article class="news-card">
   <a href={item.url} target="_blank" rel="noopener noreferrer">
@@ -20,12 +54,19 @@ const dateStr = item.published
       {item.imageUrl ? (
         <img src={item.imageUrl} alt={item.title} loading="lazy" />
       ) : (
-        <div class="no-image">{noImageLabel}</div>
+        <div
+          class="placeholder"
+          style={`background: linear-gradient(180deg, ${theme.gradientStart} 0%, ${theme.gradientEnd} 100%);`}
+          aria-label={`${sourceLabel} — ${item.category}`}
+        >
+          <span class="placeholder-glyph" style={`color: ${theme.glyphColor};`}>{theme.glyph}</span>
+          <span class="placeholder-source">{sourceLabel}</span>
+        </div>
       )}
     </div>
     <div class="news-card-body">
       <div class="news-card-meta">
-        <span class="news-card-source">{item.sourceLabel || item.source}</span>
+        <span class="news-card-source">{sourceLabel}</span>
         {dateStr && <span class="news-card-date">· {dateStr}</span>}
       </div>
       <h3 class="news-card-title">{item.title}</h3>
@@ -74,9 +115,34 @@ const dateStr = item.published
     object-fit: cover;
     display: block;
   }
-  .news-card-image .no-image {
-    color: var(--text-muted);
+  /* Phase α-14 placeholder: category-themed gradient + glyph + source label */
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  .placeholder-glyph {
+    font-size: 48px;
+    line-height: 1;
+    opacity: 0.92;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  }
+  .placeholder-source {
     font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.3px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .news-card-body {
     padding: 14px 16px 18px;
