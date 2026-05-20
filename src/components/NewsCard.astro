@@ -1,0 +1,109 @@
+---
+import type { NewsItem } from '../data/news-bridge';
+
+export interface Props {
+  item: NewsItem;
+  lang: 'en' | 'ja';
+  noImageLabel?: string;
+}
+
+const { item, lang, noImageLabel = '(no image)' } = Astro.props;
+const dateStr = item.published
+  ? new Date(item.published).toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', {
+      year: 'numeric', month: 'short', day: 'numeric',
+    })
+  : '';
+---
+<article class="news-card">
+  <a href={item.url} target="_blank" rel="noopener noreferrer">
+    <div class="news-card-image">
+      {item.imageUrl ? (
+        <img src={item.imageUrl} alt={item.title} loading="lazy" />
+      ) : (
+        <div class="no-image">{noImageLabel}</div>
+      )}
+    </div>
+    <div class="news-card-body">
+      <div class="news-card-meta">
+        <span class="news-card-source">{item.sourceLabel || item.source}</span>
+        {dateStr && <span class="news-card-date">· {dateStr}</span>}
+      </div>
+      <h3 class="news-card-title">{item.title}</h3>
+      {item.summary && (
+        <p class="news-card-summary">{item.summary.slice(0, 180)}{item.summary.length > 180 ? '…' : ''}</p>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .news-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.15s ease, background 0.15s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-card:hover {
+    transform: translateY(-2px);
+    background: var(--bg-card-hover);
+  }
+  .news-card a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .news-card a:hover { text-decoration: none; }
+  .news-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .news-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .news-card-image .no-image {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .news-card-body {
+    padding: 14px 16px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-card-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .news-card-source {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .news-card-title {
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0 0 8px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .news-card-summary {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>

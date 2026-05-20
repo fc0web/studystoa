@@ -1,0 +1,30 @@
+---
+import NewsCard from './NewsCard.astro';
+import type { NewsItem } from '../data/news-bridge';
+
+export interface Props {
+  items: NewsItem[];
+  lang: 'en' | 'ja';
+  noImageLabel?: string;
+}
+const { items, lang, noImageLabel } = Astro.props;
+---
+<div class="news-grid">
+  {items.map(item => (
+    <NewsCard item={item} lang={lang} noImageLabel={noImageLabel} />
+  ))}
+</div>
+
+<style>
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+  }
+  @media (max-width: 600px) {
+    .news-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

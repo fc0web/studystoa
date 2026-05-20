@@ -1,0 +1,45 @@
+{
+  "site": {
+    "name": "StudyStoa",
+    "tagline": "世界の哲学・思想・教育・学習・資格ニュースポータル"
+  },
+  "nav": {
+    "home": "ホーム",
+    "philosophy": "哲学",
+    "thought": "思想",
+    "education": "教育",
+    "learning": "学習",
+    "certification": "資格",
+    "about": "サイトについて"
+  },
+  "home": {
+    "intro": "世界水準の哲学・思想・教育・学習・資格 source から毎日 signal を集約するポータル. 運営: 藤本 伸樹 (Rei-AIOS Founder). Phase 1 MVP — コンテンツは徐々に成熟していきます.",
+    "latest": "新着ニュース",
+    "no_news": "ニュース読込中… (rei-aios.pages.dev からの data bridge)",
+    "source": "出典",
+    "read_more": "元記事を読む"
+  },
+  "about": {
+    "title": "StudyStoa について",
+    "operator": "運営者",
+    "operator_name": "藤本 伸樹 (Nobuki Fujimoto)",
+    "operator_role": "独立研究者 · Rei-AIOS Founder · ORCID 0009-0008-0775-3960",
+    "related_site": "関連 site",
+    "related_site_text": "Rei-AIOS (rei-aios.pages.dev) — 研究最前線 · Zenodo 論文 · Lean 4 形式検証 · D-FUMT₈ 八値論理",
+    "role_separation_title": "役割分担",
+    "role_separation_intro": "2 つの site で目的を分離しています:",
+    "role_rei_aios": "Rei-AIOS: 研究 / 数式 / コード / 形式論証 / 非商業 academic",
+    "role_studystoa": "StudyStoa: 解説 / ニュース / 多言語 / 厳選読書 list (商業 OK)",
+    "role_separation_reason": "2 つの site を分離運営することで、 研究の純度を保ちつつ一般向け readability を両立しています.",
+    "honest_scope_title": "Honest scope",
+    "honest_scope_text": "StudyStoa は third-party source (Inside Higher Ed, The Hechinger Report, Hacker News 教育系, Stanford Encyclopedia of Philosophy, Daily Nous, n-Category Café, PhilArchive 他) から見出しと要約を集約しています. 各 card は元記事へ direct link. 画像は各 source が公開している Open Graph meta tag (SNS シェア + 検索エンジン用) から取得. Phase 1 (2026 Q2): MVP 起動 + 週次更新. Phase 2-3: 日次更新 + 多言語 + Giscus コメント拡張."
+  },
+  "footer": {
+    "copyright": "© 2026 藤本 伸樹. 第三者 source 由来コンテンツは元出典に帰属.",
+    "language": "言語"
+  },
+  "card": {
+    "via": "via",
+    "no_image": "(画像なし)"
+  }
+}

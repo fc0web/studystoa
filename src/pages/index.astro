@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsGrid from '../components/NewsGrid.astro';
+import { fetchAllNews } from '../data/news-bridge';
+import en from '../i18n/en.json';
+
+const i = en;
+const news = await fetchAllNews();
+const top = news.slice(0, 24);
+---
+<Base lang="en" title={i.site.tagline}>
+  <h1>{i.site.name}</h1>
+  <p style="color: var(--text-muted); margin-bottom: 24px;">{i.home.intro}</p>
+
+  <h2>{i.home.latest}</h2>
+  {top.length > 0 ? (
+    <NewsGrid items={top} lang="en" noImageLabel={i.card.no_image} />
+  ) : (
+    <p>{i.home.no_news}</p>
+  )}
+
+  <div style="margin-top: 40px; padding: 16px; background: var(--bg-card); border-radius: 8px; font-size: 13px; color: var(--text-muted);">
+    <strong style="color: var(--accent);">Phase 1 MVP notice</strong>: This portal is in early build. Content quality and source coverage will grow gradually
+    (philosophy / thought / education / learning / certification). See <a href="/about">About</a> for the role separation with Rei-AIOS.
+  </div>
+</Base>

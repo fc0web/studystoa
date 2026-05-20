@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import ja from '../../i18n/ja.json';
+const i = ja;
+---
+<Base lang="ja" title={i.about.title}>
+  <h1>{i.about.title}</h1>
+
+  <h2>{i.about.operator}</h2>
+  <p><strong>{i.about.operator_name}</strong></p>
+  <p style="color: var(--text-muted);">{i.about.operator_role}</p>
+
+  <h2>{i.about.related_site}</h2>
+  <p>{i.about.related_site_text}</p>
+  <p><a href="https://rei-aios.pages.dev" target="_blank" rel="noopener noreferrer">→ rei-aios.pages.dev</a></p>
+
+  <h2>{i.about.role_separation_title}</h2>
+  <p>{i.about.role_separation_intro}</p>
+  <ul>
+    <li>{i.about.role_rei_aios}</li>
+    <li>{i.about.role_studystoa}</li>
+  </ul>
+  <p style="color: var(--text-muted);">{i.about.role_separation_reason}</p>
+
+  <h2>{i.about.honest_scope_title}</h2>
+  <p style="color: var(--text-muted); font-size: 14px;">{i.about.honest_scope_text}</p>
+</Base>

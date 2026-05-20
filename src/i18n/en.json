@@ -1,0 +1,45 @@
+{
+  "site": {
+    "name": "StudyStoa",
+    "tagline": "Global philosophy, thought, education, learning, and certification news"
+  },
+  "nav": {
+    "home": "Home",
+    "philosophy": "Philosophy",
+    "thought": "Thought",
+    "education": "Education",
+    "learning": "Learning",
+    "certification": "Certification",
+    "about": "About"
+  },
+  "home": {
+    "intro": "A daily-updated portal aggregating signal from world-class philosophy, thought, education, learning, and certification sources. Operated by Nobuki Fujimoto (founder of Rei-AIOS). Phase 1 MVP — content quality builds gradually.",
+    "latest": "Latest news",
+    "no_news": "News loading… (data bridge to rei-aios.pages.dev)",
+    "source": "Source",
+    "read_more": "Read on source"
+  },
+  "about": {
+    "title": "About StudyStoa",
+    "operator": "Operator",
+    "operator_name": "Nobuki Fujimoto",
+    "operator_role": "Independent researcher · Founder of Rei-AIOS · ORCID 0009-0008-0775-3960",
+    "related_site": "Related site",
+    "related_site_text": "Rei-AIOS (rei-aios.pages.dev) — research frontier · Zenodo papers · Lean 4 formal verification · D-FUMT₈ 8-valued logic",
+    "role_separation_title": "Role separation",
+    "role_separation_intro": "Two sites with distinct purposes:",
+    "role_rei_aios": "Rei-AIOS: research / formulas / code / formal proofs / non-commercial academic",
+    "role_studystoa": "StudyStoa: commentary / news / multilingual / curated reading lists (commercial-friendly)",
+    "role_separation_reason": "Operating two separate sites protects the philosophical purity of research while providing an accessible reading layer for the broader public.",
+    "honest_scope_title": "Honest scope",
+    "honest_scope_text": "StudyStoa aggregates headlines and summaries from third-party sources (Inside Higher Ed, The Hechinger Report, Hacker News education, Stanford Encyclopedia of Philosophy, Daily Nous, n-Category Café, PhilArchive, and others). Each card links back to the original source. Images shown are taken from each source's published Open Graph metadata (intended for syndication). Phase 1 (Q2 2026): MVP launch with weekly updates. Phase 2-3: expand to daily updates, multilingual, and Giscus-based discussion."
+  },
+  "footer": {
+    "copyright": "© 2026 Nobuki Fujimoto. Content from third-party sources is attributed to original publishers.",
+    "language": "Language"
+  },
+  "card": {
+    "via": "via",
+    "no_image": "(no image available)"
+  }
+}

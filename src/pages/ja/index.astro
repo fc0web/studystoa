@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import NewsGrid from '../../components/NewsGrid.astro';
+import { fetchAllNews } from '../../data/news-bridge';
+import ja from '../../i18n/ja.json';
+
+const i = ja;
+const news = await fetchAllNews();
+const top = news.slice(0, 24);
+---
+<Base lang="ja" title={i.site.tagline}>
+  <h1>{i.site.name}</h1>
+  <p style="color: var(--text-muted); margin-bottom: 24px;">{i.home.intro}</p>
+
+  <h2>{i.home.latest}</h2>
+  {top.length > 0 ? (
+    <NewsGrid items={top} lang="ja" noImageLabel={i.card.no_image} />
+  ) : (
+    <p>{i.home.no_news}</p>
+  )}
+
+  <div style="margin-top: 40px; padding: 16px; background: var(--bg-card); border-radius: 8px; font-size: 13px; color: var(--text-muted);">
+    <strong style="color: var(--accent);">Phase 1 MVP のお知らせ</strong>: 本ポータルは構築初期段階. コンテンツの quality と source coverage は徐々に成長します
+    (哲学 / 思想 / 教育 / 学習 / 資格). Rei-AIOS との役割分担は <a href="/ja/about">サイトについて</a> をご覧ください.
+  </div>
+</Base>

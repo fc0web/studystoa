@@ -1,0 +1,23 @@
+---
+export interface Props {
+  currentLang: 'en' | 'ja';
+}
+const { currentLang } = Astro.props;
+const otherLang = currentLang === 'en' ? 'ja' : 'en';
+const label = otherLang === 'ja' ? '日本語' : 'English';
+const path = Astro.url.pathname;
+
+// Compute target path
+let target = '/';
+if (otherLang === 'ja') {
+  // en → ja: prepend /ja/
+  target = path === '/' ? '/ja/' : `/ja${path}`;
+} else {
+  // ja → en: strip /ja/ prefix
+  target = path.replace(/^\/ja(\/|$)/, '/');
+  if (!target.startsWith('/')) target = '/' + target;
+}
+---
+<a href={target} style="font-size: 13px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px;">
+  🌐 {label}
+</a>
