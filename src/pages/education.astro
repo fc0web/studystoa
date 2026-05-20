@@ -14,7 +14,7 @@ const items = filterByCategory(news, 'education');
     Sources: Inside Higher Ed, The Hechinger Report.
   </p>
   {items.length > 0 ? (
-    <NewsGrid items={items} lang="en" noImageLabel={i.card.no_image} />
+    <NewsGrid items={items} lang="en" />
   ) : (
     <p>{i.home.no_news}</p>
   )}

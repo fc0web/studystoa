@@ -4,9 +4,6 @@ import type { NewsItem, Category } from '../data/news-bridge';
 export interface Props {
   item: NewsItem;
   lang: 'en' | 'ja';
-  /** Deprecated (kept for back-compat with NewsGrid prop). Phase α-14: no longer used —
-   *  no-image cells now render a category-themed SVG placeholder instead of plain text. */
-  noImageLabel?: string;
 }
 
 const { item, lang } = Astro.props;

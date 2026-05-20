@@ -14,7 +14,7 @@ const top = news.slice(0, 24);
 
   <h2>{i.home.latest}</h2>
   {top.length > 0 ? (
-    <NewsGrid items={top} lang="en" noImageLabel={i.card.no_image} />
+    <NewsGrid items={top} lang="en" />
   ) : (
     <p>{i.home.no_news}</p>
   )}

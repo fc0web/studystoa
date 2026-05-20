@@ -14,7 +14,7 @@ const items = filterByCategory(news, 'philosophy');
     Sources: Philosophy Bites / Daily Nous / n-Category Café / PhilArchive / PhilSci-Archive
   </p>
   {items.length > 0 ? (
-    <NewsGrid items={items} lang="ja" noImageLabel={i.card.no_image} />
+    <NewsGrid items={items} lang="ja" />
   ) : (
     <p>{i.home.no_news}</p>
   )}

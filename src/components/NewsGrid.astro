@@ -5,13 +5,12 @@ import type { NewsItem } from '../data/news-bridge';
 export interface Props {
   items: NewsItem[];
   lang: 'en' | 'ja';
-  noImageLabel?: string;
 }
-const { items, lang, noImageLabel } = Astro.props;
+const { items, lang } = Astro.props;
 ---
 <div class="news-grid">
   {items.map(item => (
-    <NewsCard item={item} lang={lang} noImageLabel={noImageLabel} />
+    <NewsCard item={item} lang={lang} />
   ))}
 </div>
 

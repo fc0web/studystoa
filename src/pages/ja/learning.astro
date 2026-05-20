@@ -14,7 +14,7 @@ const items = filterByCategory(news, 'learning');
     Sources: Hacker News 教育 stories (Algolia API 経由)
   </p>
   {items.length > 0 ? (
-    <NewsGrid items={items} lang="ja" noImageLabel={i.card.no_image} />
+    <NewsGrid items={items} lang="ja" />
   ) : (
     <p>{i.home.no_news}</p>
   )}

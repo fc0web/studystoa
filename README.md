@@ -149,6 +149,16 @@ Phase 1 source verification summary (2026-05-20):
 
 Open Graph images are hot-linked from publisher CDNs (industry-standard fair use, same as Yahoo / Google News / Smartnews / Apple News). If any publisher requests removal, contact `fc2webb@gmail.com` for compliance within 7 days.
 
+### Image quality pipeline (Phase α-15, 2026-05-21)
+
+The image URL extraction pipeline (in rei-aios `scripts/research-radar/og-image-scraper.ts`) applies:
+
+1. **Multi-source extraction** — `og:image` → `twitter:image` → `twitter:image:src` → `<link rel=image_src>` → `<article>` first `<img>` → `.entry-content` first `<img>` (CMS-aware fallback chain).
+2. **Generic-icon filter** — rejects EPrints template variables, libsyn `podcastIcon.gif`, favicon paths, `feedblitz.com/images/spinner.gif`, `default.png` placeholders, `weekly-update-logo` etc.
+3. **HTTP HEAD validation** — verifies `image/*` content-type + `>= 1KB` content-length + status 200, with `head-not-supported` graceful path for 405/CDN edge cases.
+
+When all 3 layers reject (e.g., PhilSci-Archive has no OG image at all), the card renders a **category-themed SVG placeholder** (philosophy=🏛 purple / thought=💭 blue / education=🎓 green / learning=💡 orange) with source label — see `src/components/NewsCard.astro`.
+
 ## License & Attribution
 
 - This site's **own** code: MIT or AGPL-3.0 (TBD)

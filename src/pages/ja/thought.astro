@@ -14,7 +14,7 @@ const items = filterByCategory(news, 'thought');
     Sources: Crooked Timber / 3 Quarks Daily / The Conversation (CC-BY-ND-4.0)
   </p>
   {items.length > 0 ? (
-    <NewsGrid items={items} lang="ja" noImageLabel={i.card.no_image} />
+    <NewsGrid items={items} lang="ja" />
   ) : (
     <p>{i.home.no_news}</p>
   )}
